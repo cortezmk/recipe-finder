@@ -1,59 +1,71 @@
-# RecipeFinder
+# Recipe Finder (List + Detail + Create)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.2.1.
+## Goal
 
-## Development server
+Build a small Angular app to browse, search, and create recipes. Data can be stored in memory or localStorage (no backend required).
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
-```
+## User Stories
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+1. **Browse:** As a user, I can see a paginated list of recipes with name, short description, and tags.
+2. **Search/Filter:** I can filter recipes by a free-text search (name or description) and by selecting one or more tags.
+3. **View details:** I can click a recipe to see a detail page with full description, ingredients, and steps.
+4. **Create:** I can add a new recipe via a form with validation.
+5. **Persis:** My recipes persist across reloads.
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Requirements
 
-```bash
-ng generate component component-name
-```
+### Routing
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- `/recipes` – list view (supports query params for search, selected tags, and page).
+- `/recipes/:id` – detail view (use a Route Resolver to fetch the recipe).
+- `/recipes/new` – create form (protect with a simple CanDeactivate guard to warn on unsaved changes).
 
-```bash
-ng generate --help
-```
+### State & Data
 
-## Building
+- A `RecipeService` manages data (local storage).
+- **Recipe model:**
+  ```typescript
+  export interface Recipe {
+    id: string;
+    name: string;
+    description: string;
+    tags: string[];        // e.g. ["vegan","quick","dessert"]
+    ingredients: string[]; // simple strings is fine
+    steps: string[];       // ordered steps
+    createdAt: string;     // ISO string
+  }
+  ```
 
-To build the project run:
+### List View
 
-```bash
-ng build
-```
+- Shows recipes, basic pagination (page size 10).
+- Search box (debounced) + tag multiselect (chips or checkboxes).
+- Reflect filters & page in the URL query params; loading the URL restores state.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### Detail View
 
-## Running unit tests
+- Display all fields neatly.
+- If recipe not found, navigate to `/recipes`
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### Create Form
 
-```bash
-ng test
-```
+- Reactive Forms with validation:
+  - `name`: required, min length 3
+  - `description`: required
+  - `tags`: 0..5 tags (custom validator)
+  - `ingredients`: at least 1
+  - `steps`: at least 1
+- Add/remove ingredients and steps dynamically (`FormArray`).
+- On save, create an `id`, `createdAt`, and navigate to the detail page.
+- CanDeactivate guard: if the form is dirty, confirm before leaving.
 
-## Running end-to-end tests
+### UX & Reusability
 
-For end-to-end (e2e) testing, run:
+- A custom pipe `highlight` that wraps matched search terms in `<mark>` in the list view.
+- Basic, clean styling
 
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
