@@ -1,0 +1,96 @@
+<div class="recipe-create-container">
+  <div class="header">
+    <h1>Create New Recipe</h1>
+    <p>Fill in the details below to create your recipe</p>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="recipe-form">
+    <mat-card class="form-card">
+      <mat-card-content>
+        <div class="form-section">
+          <h3>Basic Information</h3>
+          
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Recipe Name </mat-label>
+            <input matInput formControlName="name" placeholder="Enter recipe name">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Description </mat-label>
+            <textarea matInput formControlName="description" placeholder="Describe your recipe" rows="3"></textarea>
+          </mat-form-field>
+
+          <div class="tags-field">
+            <tag-list label="Add tags" [autocomplete]="allTags()" [(tags)]="tags" formControlName="tags" />
+          </div>
+          @if (form.get('tags')?.errors?.['maxTags']) {
+            <mat-error>Maximum {{ form.get('tags')?.errors?.['maxTags'].max }} tags allowed</mat-error>
+          }
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="form-section">
+          <div class="section-header">
+            <h3>Ingredients *</h3>
+            <button type="button" mat-mini-fab color="primary" (click)="addIngredient()">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+          
+          <div class="array-fields" formArrayName="ingredients">
+            @for (ingredient of ingredients.controls; track $index; let i = $index) {
+              <div class="array-field">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Ingredient {{ i + 1 }}</mat-label>
+                  <input matInput [formControlName]="i" placeholder="Enter ingredient">
+                </mat-form-field>
+                
+                @if (ingredients.length > 1) {
+                  <button type="button" mat-icon-button color="warn" (click)="removeIngredient(i)">
+                    <mat-icon>remove</mat-icon>
+                  </button>
+                }
+              </div>
+            }
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="form-section">
+          <div class="section-header">
+            <h3>Instructions *</h3>
+            <button type="button" mat-mini-fab color="primary" (click)="addStep()">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+          
+          <div class="array-fields" formArrayName="steps">
+            @for (step of steps.controls; track $index; let i = $index) {
+              <div class="array-field">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Step {{ i + 1 }}</mat-label>
+                  <textarea matInput [formControlName]="i" placeholder="Enter step description" rows="2"></textarea>
+                </mat-form-field>
+                
+                @if (steps.length > 1) {
+                  <button type="button" mat-icon-button color="warn" (click)="removeStep(i)">
+                    <mat-icon>remove</mat-icon>
+                  </button>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions class="form-actions">
+        <button type="button" mat-button (click)="onCancel()">Cancel</button>
+        <button type="submit" mat-raised-button color="primary" [disabled]="form.invalid">
+          Create Recipe
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

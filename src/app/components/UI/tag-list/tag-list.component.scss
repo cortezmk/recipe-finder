@@ -1,0 +1,7 @@
+mat-form-field {
+  width: 100%;
+}
+
+:host-context(.ng-invalid) mat-form-field {
+  border-color: #f44336;
+}

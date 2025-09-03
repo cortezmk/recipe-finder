@@ -1,0 +1,65 @@
+<div class="recipe-list-container">
+  <div class="header">
+    <h1>Recipe Finder</h1>
+    <button mat-raised-button color="primary" (click)="onNewRecipe()">
+      <mat-icon>add</mat-icon>
+      New Recipe
+    </button>
+  </div>
+
+  <div class="filters">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Search recipes</mat-label>
+      <input 
+        matInput 
+        placeholder="Search by name or description..."
+        [value]="searchQuery()"
+        (input)="onSearchChange($event)"
+      >
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <div class="tags-field">
+      <tag-list label="Filter by tags" [autocomplete]="allTags()" [(tags)]="tags"/>
+    </div>
+  </div>
+
+  @if (paginatedRecipes().length === 0) {
+    <div class="no-results">
+      <mat-icon>restaurant</mat-icon>
+      <p>No recipes found matching your criteria.</p>
+      <p>Try adjusting your search or filters.</p>
+    </div>
+  } @else {
+    <div class="recipes-grid">
+      @for (recipe of paginatedRecipes(); track recipe.id) {
+        <mat-card class="recipe-card" (click)="onRecipeClick(recipe)">
+          <mat-card-header>
+            <mat-card-title [innerHTML]="recipe.name | highlight:searchQuery()"></mat-card-title>
+            <mat-card-subtitle>
+              <span [innerHTML]="recipe.description | highlight:searchQuery()"></span>
+            </mat-card-subtitle>
+          </mat-card-header>
+          
+          <mat-card-content>
+            <div class="tags">
+              @for (tag of recipe.tags; track tag) {
+                <span class="tag">{{ tag }}</span>
+              }
+            </div>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+
+    <mat-paginator
+      [length]="totalRecipes()"
+      [pageSize]="pageSize"
+      [pageIndex]="currentPage()"
+      [pageSizeOptions]="[5, 10, 25, 50]"
+      (page)="onPageChange($event)"
+      aria-label="Select page"
+    >
+    </mat-paginator>
+  }
+</div>

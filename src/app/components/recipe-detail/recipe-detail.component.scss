@@ -1,0 +1,165 @@
+.recipe-detail-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+
+  .actions {
+    display: flex;
+    gap: 8px;
+  }
+}
+
+.recipe-card {
+  mat-card-header {
+    margin-bottom: 24px;
+
+    mat-card-title {
+      font-size: 2rem;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    mat-card-subtitle {
+      color: #666;
+      font-size: 1rem;
+    }
+  }
+
+  mat-card-content {
+    h3 {
+      color: #333;
+      font-size: 1.3rem;
+      margin: 24px 0 16px 0;
+      font-weight: 500;
+    }
+
+    p {
+      color: #555;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    ul, ol {
+      color: #555;
+      line-height: 1.6;
+      padding-left: 20px;
+
+      li {
+        margin-bottom: 8px;
+      }
+    }
+
+    .description {
+      margin-bottom: 24px;
+    }
+
+    .tags {
+      margin: 24px 0;
+
+      .tag-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+
+        .tag {
+          background-color: #e3f2fd;
+          color: #1976d2;
+          padding: 6px 16px;
+          border-radius: 20px;
+          font-size: 0.9rem;
+          font-weight: 500;
+        }
+      }
+    }
+
+    .ingredients {
+      margin: 24px 0;
+    }
+
+    .steps {
+      margin: 24px 0;
+    }
+  }
+}
+
+.loading {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+
+  mat-icon {
+    font-size: 3rem;
+    width: 3rem;
+    height: 3rem;
+    color: #ccc;
+    margin-bottom: 16px;
+    animation: spin 2s linear infinite;
+  }
+
+  p {
+    margin: 0;
+    font-size: 1.1rem;
+  }
+}
+
+.not-found {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+
+  mat-icon {
+    font-size: 4rem;
+    width: 4rem;
+    height: 4rem;
+    color: #ccc;
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    color: #333;
+    margin: 16px 0;
+  }
+
+  p {
+    margin: 16px 0 24px 0;
+    font-size: 1.1rem;
+  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .recipe-detail-container {
+    padding: 16px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+
+    .actions {
+      justify-content: center;
+    }
+  }
+
+  .recipe-card {
+    mat-card-header {
+      mat-card-title {
+        font-size: 1.5rem;
+      }
+    }
+  }
+}

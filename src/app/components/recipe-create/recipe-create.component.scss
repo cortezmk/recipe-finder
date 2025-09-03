@@ -1,0 +1,131 @@
+.recipe-create-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 32px;
+
+  h1 {
+    margin: 0 0 8px 0;
+    color: #333;
+    font-size: 2.5rem;
+    font-weight: 300;
+  }
+
+  p {
+    margin: 0;
+    color: #666;
+    font-size: 1.1rem;
+  }
+}
+
+.recipe-form {
+  .form-card {
+    .form-section {
+      margin-bottom: 32px;
+
+      h3 {
+        color: #333;
+        font-size: 1.3rem;
+        margin: 0 0 20px 0;
+        font-weight: 500;
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+
+        h3 {
+          margin: 0;
+        }
+      }
+
+      .array-fields {
+        .array-field {
+          display: flex;
+          align-items: flex-start;
+          gap: 16px;
+          margin-bottom: 16px;
+
+          .full-width {
+            flex: 1;
+          }
+        }
+      }
+    }
+
+    .full-width {
+      width: 100%;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 16px;
+      padding: 24px;
+      margin: 0;
+    }
+  }
+}
+
+// Form validation styles
+.invalid {
+  .mat-mdc-form-field-outline {
+    color: #f44336 !important;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .recipe-create-container {
+    padding: 16px;
+  }
+
+  .header {
+    h1 {
+      font-size: 2rem;
+    }
+  }
+
+  .recipe-form {
+    .form-card {
+      .form-section {
+        .section-header {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 16px;
+
+          .add-button {
+            align-self: flex-end;
+          }
+        }
+
+        .array-fields {
+          .array-field {
+            flex-direction: column;
+            gap: 8px;
+
+            .remove-button {
+              align-self: flex-end;
+              margin-top: 0;
+            }
+          }
+        }
+      }
+
+      .form-actions {
+        flex-direction: column;
+        gap: 12px;
+
+        button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
