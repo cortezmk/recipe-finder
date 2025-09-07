@@ -135,13 +135,13 @@ export class RecipeListComponent implements OnInit {
   private updateUrl(): void {
     const queryParams: any = {};
     
-    if (this.searchQuery()) {
+    if (this.searchQuery() || queryParams.search !== '') {
       queryParams.search = this.searchQuery();
     }
     if (this.selectedTags().length > 0) {
       queryParams.tags = this.selectedTags();
     }
-    if (this.currentPage() > 0) {
+    if (this.currentPage() >= 0) {
       queryParams.page = this.currentPage();
     }
 
